@@ -19,23 +19,21 @@ export function renderPostsPageComponent({ appEl }) {
                   <p class="post-header__user-name">${post.user.name}</p>
               </div>
               <div class="post-image-container">
-              <img class="post-image" src="${post.imageUrl}">
+                <img class="post-image" src="${post.imageUrl}">
               </div>
               <div class="post-likes">
-              <button data-post-id=${post.id} class="like-button">
-                  <img src="./assets/images/like-active.svg">
-              </button>
-              <p class="post-likes-text">
-                  Нравится: <strong>2</strong>
-              </p>
+                <button data-post-id=${post.id} class="like-button">
+                    <img src="./assets/images/like-active.svg">
+                </button>
+                <p class="post-likes-text">
+                    Нравится: <strong>2</strong>
+                </p>
               </div>
               <p class="post-text">
-              <span class="user-name">${post.user.name}</span>
-              ${post.description}
+                <span class="user-name">${post.user.name}</span>
+                ${post.description}
               </p>
-              <p class="post-date">
-              19 минут назад
-              </p>
+              <p class="post-date">19 минут назад</p>
           </li>`
   }).join('');
   
@@ -48,8 +46,6 @@ export function renderPostsPageComponent({ appEl }) {
     </div>`;
   
   appEl.innerHTML = appHtml;
-
-  
 
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
