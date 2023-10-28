@@ -1,10 +1,9 @@
+
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
 
-let description1; 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
-  description1 = document.querySelector('.textarea');
   let imageUrl = "";
   const render = () => {
     // TODO: Реализовать страницу добавления поста
@@ -23,7 +22,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
             </div>
           </div>
           <label>Опишите фотографию:
-            <textarea class="input textarea" rows="4"></textarea>
+            <textarea id="description" class="input textarea" rows="4"></textarea>
           </label>
           <button class="button" id="add-button">Добавить</button>
         </div>
@@ -49,13 +48,34 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     }
 
     document.getElementById("add-button").addEventListener("click", () => {
-      console.log(1);
+      let description = document.getElementById('description');
+      console.log(description.value);
       onAddPostClick({
-        description: 'eee',
+        description: description.value,
         imageUrl: imageUrl,
-      });
+      })
+      // .catch((error) => {
+      //   console.error(error)
+      //   if (error.message === "Выберите фото и добавьте комментарий") {
+      //     alert('Выберите фото и добавьте комментарий');
+      //     return;
+      //   }
+
+      //   alert('Ошибка соединения, попробуй позже');
+      //   return;
+      // })
     });
   };
 
   render();
 }
+
+
+
+// document.getElementById("add-button").addEventListener("click", () => {
+//   console.log(1);
+//   onAddPostClick({
+//     description: 'eee',
+//     imageUrl: imageUrl,
+//   });
+// });
