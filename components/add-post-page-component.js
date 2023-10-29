@@ -70,8 +70,6 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   render();
 }
 
-
-
 // document.getElementById("add-button").addEventListener("click", () => {
 //   console.log(1);
 //   onAddPostClick({

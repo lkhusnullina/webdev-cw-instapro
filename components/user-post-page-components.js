@@ -1,8 +1,7 @@
 import { renderHeaderComponent } from "./header-component.js";
 
-export function renderUserPageComponent() {
-
-    const postsHtml = posts.map((post) => {
+export function renderUserPageComponent({ appEl, userPosts }) {
+    const postsHtml = userPosts.map((post) => {
         return `<li class="post">
                   <div class="post-header" data-user-id=${post.user.id}>
                       <img src="${post.user.imageUrl}" class="post-header__user-image">
@@ -26,7 +25,7 @@ export function renderUserPageComponent() {
                   <p class="post-date">19 минут назад</p>
               </li>`
       }).join('');
-      
+
       const appHtml = `
         <div class="page-container">
           <div class="header-container"></div>
@@ -34,10 +33,10 @@ export function renderUserPageComponent() {
             ${postsHtml}
           </ul>
         </div>`;
-      
-      appEl.innerHTML = appHtml;
-    
-    renderHeaderComponent({
-        element: document.querySelector(".header-container"),
-    });
+
+        appEl.innerHTML = appHtml;
+
+        renderHeaderComponent({
+          element: document.querySelector(".header-container"),
+      });
 }

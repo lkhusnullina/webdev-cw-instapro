@@ -1,6 +1,7 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
+import { addLike, disLike, getPosts } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
   
@@ -21,8 +22,8 @@ export function renderPostsPageComponent({ appEl }) {
                 <img class="post-image" src="${post.imageUrl}">
               </div>
               <div class="post-likes">
-                <button data-post-id=${post.id} class="like-button">
-                    <img src="./assets/images/like-active.svg">
+                <button data-post-id=${post.id} data-like=${post.isLiked} class="like-button">
+                    <img  src="${post.isLiked ? './assets/images/like-active.svg' : './assets/images/like-not-active.svg'}">
                 </button>
                 <p class="post-likes-text">
                     Нравится: <strong>2</strong>
@@ -45,6 +46,8 @@ export function renderPostsPageComponent({ appEl }) {
     </div>`;
   
   appEl.innerHTML = appHtml;
+  
+  init();
 
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
@@ -58,6 +61,76 @@ export function renderPostsPageComponent({ appEl }) {
     });
   }
 }
+
+const init = () => {
+  let likeButtons = document.querySelectorAll('.like-button');
+  for (let likeButton of likeButtons) {
+    likeButton.addEventListener('click', addLikesElements)
+  }
+}
+
+const addLikesElements = (event) => {
+  const postBlock = event.target.closest('.post');
+  
+  const postId = postBlock.dataset.postId;
+  // const posts = getPosts();
+  // const post = posts.find((p) => p.id == postId);
+  //console.log(postId.hasAttribute);
+  // if (!posts) return;
+
+  // if(postId) {
+  //   disLike(postId);
+  // }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const addLikesElements = () => {
+//   // const postBlock = target.closest('.post');
+//   // const postId = postBlock.dataset.id;
+//   const likes = document.querySelector('.like-button');
+//   console.log(likes);
+//   // const comments = getComments();
+//   // const comment = comments.find((c) => c.id == commentId);
+//   // if (!comment) return;
+
+//   // likes.classList.add('-loading-like');
+
+//   // delay(2000).then(() => {
+//   //   if (comment.isLiked) {
+//   //     comment.likes--;
+//   //   } else {
+//   //     comment.likes++;
+//   //   }
+//   //   comment.isLiked = !comment.isLiked;
+//   //   comment.isLikeLoading = false;
+//   //   renderComments();
+//   // });
+// };
+
+// addLikesElements();
+
 
 // const appHtml = `
 // <div class="page-container">

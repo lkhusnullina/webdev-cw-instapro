@@ -1,4 +1,4 @@
-import { addPost, getPosts } from "./api.js";
+import { addPost, getPosts, getUserPost } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -20,6 +20,7 @@ import { renderUserPageComponent } from "./components/user-post-page-components.
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
+export let userPosts = [];
 
 
 export const logout = () => {
@@ -67,8 +68,12 @@ export const goToPage = (newPage, data) => {
       // TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
       page = USER_POSTS_PAGE;
-      posts = posts.filter(post => post.user.id === data.userId);
-      return renderApp();
+      return getUserPost(data.userId)
+        .then((res) => {
+        userPosts = res;
+        console.log(res);
+        renderApp();
+      })
     }
 
     page = newPage;
@@ -123,12 +128,10 @@ const renderApp = () => {
 
   if (page === USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользователя
-    // appEl.innerHTML = renderUserPageComponent();
-
-    return renderPostsPageComponent({
+    return renderUserPageComponent({
       appEl,
+      userPosts
     });
-    return;
   }
 };
 
