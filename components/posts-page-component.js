@@ -11,9 +11,9 @@ export function renderPostsPageComponent({ appEl }) {
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
   
-  console.log("Актуальный список постов:", posts);
+  //console.log("Актуальный список постов:", posts);
   const postsHtml = posts.map((post) => {
-    return `<li class="post">
+    return `<li class="post" data-post-id=${post.id}>
               <div class="post-header" data-user-id=${post.user.id}>
                   <img src="${post.user.imageUrl}" class="post-header__user-image">
                   <p class="post-header__user-name">${post.user.name}</p>
@@ -71,17 +71,47 @@ const init = () => {
 
 const addLikesElements = (event) => {
   const postBlock = event.target.closest('.post');
-  
   const postId = postBlock.dataset.postId;
-  // const posts = getPosts();
-  // const post = posts.find((p) => p.id == postId);
-  //console.log(postId.hasAttribute);
-  // if (!posts) return;
+  const post = posts.find((p) => p.id == postId);
+  console.log(post);
+  if (!post) return;
 
-  // if(postId) {
-  //   disLike(postId);
-  // }
+  if(post.isLiked) {
+    disLike(postId);
+  } else {
+    addLike(postId)
+  }
 }
+
+
+
+
+
+// const addLikesElements = (event) => {
+//   const postBlock = event.target.closest('.post');
+//   console.log(postBlock);
+//   const postId = postBlock.dataset.id;
+//   console.log(postId);
+//   const likes = postBlock.querySelector('.like-button');
+//   // const posts = getPosts();
+//   // const postIsLiked = postBlock.dataset.like;
+//   // console.log(postIsLiked);
+//   // const post = posts.find((c) => c.id == postId);
+//   // if (!post) return;
+
+//   // likes.classList.add('-loading-like');
+
+//   // delay(2000).then(() => {
+//   //   if (post.isLiked) {
+//   //     post.likes--;
+//   //   } else {
+//   //     post.likes++;
+//   //   }
+//   //   post.isLiked = !comment.isLiked;
+//   //   post.isLikeLoading = false;
+//   //   renderPostsPageComponent();
+//   // });
+// };
 
 
 
