@@ -71,7 +71,6 @@ export const goToPage = (newPage, data) => {
       return getUserPost(data.userId)
         .then((res) => {
         userPosts = res;
-        console.log(res);
         renderApp();
       })
     }

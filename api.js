@@ -5,7 +5,9 @@ import { user } from "./index.js";
 
 //const personalKey = "khusnullina-lyubov";
 const personalKey = "prod";
-const baseHost = "https://wedev-api.sky.pro";
+//"https://webdev-hw-api.vercel.app";
+// const baseHost = "https://wedev-api.sky.pro";
+const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
 const getToken = () => {
@@ -115,6 +117,7 @@ export function addLike(id) {
     headers: {
       Authorization: token,
     },
+    mode: "no-cors", 
   }).then((response) => {
     if (response.status === 400) {
       throw new Error("Неверный логин или пароль");
@@ -130,6 +133,7 @@ export function disLike(id) {
     headers: {
       Authorization: token,
     },
+    mode: "no-cors", 
   }).then((response) => {
     if (response.status === 400) {
       throw new Error("Неверный логин или пароль");
