@@ -3,14 +3,13 @@
 
 import { user } from "./index.js";
 
-//const personalKey = "khusnullina-lyubov";
-const personalKey = "prod";
-//"https://webdev-hw-api.vercel.app";
-// const baseHost = "https://wedev-api.sky.pro";
-const baseHost = "https://webdev-hw-api.vercel.app";
+const personalKey = "khusnullina-lyubov";
+//const personalKey = "prod";
+const baseHost = "https://wedev-api.sky.pro";
+//const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
-const getToken = () => {
+export const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;
 };
@@ -50,7 +49,7 @@ export function addPost({ description, imageUrl }) {
   })
     .then((response) => {
       if (response.status === 400) {
-        alert("Добавь фото и описание");
+        alert("Добавь фото или описание");
         throw new Error("Выберите фото и добавьте комментарий");
       }
       return response.json();

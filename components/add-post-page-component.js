@@ -2,6 +2,13 @@
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
+const getSafeString = (str) =>
+  str
+    .trim()
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   let imageUrl = "";
@@ -49,11 +56,23 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     document.getElementById("add-button").addEventListener("click", () => {
       let description = document.getElementById('description');
-      console.log(description.value);
+
+      if (!description.value) {
+        alert("введите описание");
+        return;
+      }
+
+      if (!imageUrl) {
+        alert("Не выбрана фотография");
+        return;
+      }
+
       onAddPostClick({
-        description: description.value,
+        description: getSafeString(description.value),
         imageUrl: imageUrl,
       })
+
+      
       // .catch((error) => {
       //   console.error(error)
       //   if (error.message === "Выберите фото и добавьте комментарий") {
@@ -69,11 +88,3 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
   render();
 }
-
-// document.getElementById("add-button").addEventListener("click", () => {
-//   console.log(1);
-//   onAddPostClick({
-//     description: 'eee',
-//     imageUrl: imageUrl,
-//   });
-// });

@@ -1,7 +1,7 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
-import { addLike, disLike, getPosts } from "../api.js";
+import { addLike, disLike, getToken } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
   
@@ -11,7 +11,7 @@ export function renderPostsPageComponent({ appEl }) {
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
   
-  //console.log("Актуальный список постов:", posts);
+  console.log("Актуальный список постов:", posts);
   const postsHtml = posts.map((post) => {
     return `<li class="post" data-post-id=${post.id}>
               <div class="post-header" data-user-id=${post.user.id}>
@@ -70,6 +70,12 @@ const init = () => {
 }
 
 const addLikesElements = (event) => {
+  
+  if (!getToken()) {
+    alert('Необходимо авторизоваться')
+    return;
+  }
+
   const postBlock = event.target.closest('.post');
   const postId = postBlock.dataset.postId;
   const post = posts.find((p) => p.id == postId);
