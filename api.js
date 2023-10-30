@@ -111,33 +111,45 @@ export function loginUser({ login, password }) {
 
 export function addLike(id) {
   const token = getToken();
-  return fetch(baseHost + `/${id}`+ `/like`, {
+  return fetch(postsHost + `/${id}`+ `/like`, {
     method: "POST",
     headers: {
       Authorization: token,
     },
-    mode: "no-cors", 
-  }).then((response) => {
-    if (response.status === 400) {
-      throw new Error("Неверный логин или пароль");
+    // mode: "no-cors",
+  })
+  .then((response) => {
+    if (response.status !== 200) {
+      throw new Error("Нет авторизации для того, чтобы лайкать посты");
     }
     return response.json();
+  })
+  .catch((error) => {
+    if ((error.message = "Нет авторизации для того, чтобы лайкать посты")) {
+      alert("Авторизуйтесь, чтобы поставить лайк");
+    }
+  })
+  .then((data) => {
+    return data.post;
   });
 }
 
 export function disLike(id) {
   const token = getToken();
-  return fetch(baseHost + `/${id}`+ `/dislike`, {
+  return fetch(postsHost + `/${id}`+ `/dislike`, {
     method: "POST",
     headers: {
       Authorization: token,
     },
-    mode: "no-cors", 
+    // mode: "no-cors", 
   }).then((response) => {
     if (response.status === 400) {
       throw new Error("Неверный логин или пароль");
     }
     return response.json();
+  })
+  .then((data) => {
+    return data.post;
   });
 }
 

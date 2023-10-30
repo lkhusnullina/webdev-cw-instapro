@@ -21,6 +21,9 @@ export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
 export let userPosts = [];
+export const setPosts = (newPosts) => {
+  posts = newPosts;
+}
 
 
 export const logout = () => {
@@ -77,7 +80,6 @@ export const goToPage = (newPage, data) => {
 
     page = newPage;
     renderApp();
-
     return;
   }
 
