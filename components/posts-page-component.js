@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, page, setPosts } from "../index.js";
@@ -12,6 +14,7 @@ export function renderPostsPageComponent({ appEl }) {
    */
   
   console.log("Актуальный список постов:", posts);
+  const ruLocale = require('date-fns/locale/ru');//
   const postsHtml = posts.map((post) => {
     return `<li class="post" data-post-id=${post.id}>
               <div class="post-header" data-user-id=${post.user.id}>
@@ -33,7 +36,12 @@ export function renderPostsPageComponent({ appEl }) {
                 <span class="user-name">${post.user.name}</span>
                 ${post.description}
               </p>
-              <p class="post-date">19 минут назад</p>
+              <p class="post-date">
+                  ${formatDistanceToNow(new Date(post.createdAt), {
+                    locale: ru,
+                    includeSeconds: true,
+                  })}
+                назад</p>
           </li>`
   }).join('');
   
@@ -96,3 +104,6 @@ const addLikesElements = (event) => {
   }
 }
 
+// ${formatDistanceToNow(new Date(post.createdAt), {
+//   locale: ruLocale,
+// })}

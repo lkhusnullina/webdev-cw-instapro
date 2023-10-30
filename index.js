@@ -1,3 +1,4 @@
+//import { format } from "date-fns";
 import { addPost, getPosts, getUserPost } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
@@ -70,16 +71,23 @@ export const goToPage = (newPage, data) => {
     if (newPage === USER_POSTS_PAGE) {
       // TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
-      page = USER_POSTS_PAGE;
+      // page = USER_POSTS_PAGE;
+        page = LOADING_PAGE;
+        renderApp();
       return getUserPost(data.userId)
         .then((res) => {
-        userPosts = res;
-        renderApp();
-      })
+          userPosts = res;
+          page = USER_POSTS_PAGE;
+          renderApp();
+      }).catch((error) => { //добавила катч
+          console.error(error);
+          goToPage(USER_POSTS_PAGE);
+      });
     }
 
     page = newPage;
     renderApp();
+
     return;
   }
 
