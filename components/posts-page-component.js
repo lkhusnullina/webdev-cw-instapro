@@ -2,19 +2,13 @@ import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage, page, setPosts } from "../index.js";
+import { posts, appEl, goToPage, setPosts } from "../index.js";
 import { addLike, disLike, getToken } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
-  
   // TODO: реализовать рендер постов из api
-  /**
-   * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
-   * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
-   */
   
   console.log("Актуальный список постов:", posts);
-  const ruLocale = require('date-fns/locale/ru');//
   const postsHtml = posts.map((post) => {
     return `<li class="post" data-post-id=${post.id}>
               <div class="post-header" data-user-id=${post.user.id}>
@@ -93,17 +87,27 @@ const addLikesElements = (event) => {
   if (!post) return;
   if (post.isLiked) {
     disLike(postId).then((response) => {
-      setPosts(response);
-      goToPage(page);
+      const newItems = posts.map((post) => {
+        if (post.id == postId) {
+          return response;
+        } else {
+          return post;
+        }
+      })
+      setPosts(newItems);
+      renderPostsPageComponent({ appEl })
     });
   } else {
     addLike(postId).then((response) => { 
-      setPosts(response);
-      goToPage(page);
+      const newItems = posts.map((post) => {
+        if (post.id == postId) {
+          return response;
+        } else {
+          return post;
+        }
+      })
+      setPosts(newItems);
+      renderPostsPageComponent({ appEl })
     });
   }
 }
-
-// ${formatDistanceToNow(new Date(post.createdAt), {
-//   locale: ruLocale,
-// })}

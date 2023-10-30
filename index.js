@@ -1,4 +1,3 @@
-//import { format } from "date-fns";
 import { addPost, getPosts, getUserPost } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
@@ -16,15 +15,14 @@ import {
   removeUserFromLocalStorage,
   saveUserToLocalStorage,
 } from "./helpers.js";
-import { renderUserPageComponent } from "./components/user-post-page-components.js";
 
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
-export let userPosts = [];
 export const setPosts = (newPosts) => {
   posts = newPosts;
 }
+export const appEl = document.getElementById("app");
 
 
 export const logout = () => {
@@ -76,7 +74,7 @@ export const goToPage = (newPage, data) => {
         renderApp();
       return getUserPost(data.userId)
         .then((res) => {
-          userPosts = res;
+          setPosts(res);
           page = USER_POSTS_PAGE;
           renderApp();
       }).catch((error) => { //добавила катч
@@ -95,7 +93,6 @@ export const goToPage = (newPage, data) => {
 };
 
 const renderApp = () => {
-  const appEl = document.getElementById("app");
   if (page === LOADING_PAGE) {
     return renderLoadingPageComponent({
       appEl,
@@ -137,9 +134,8 @@ const renderApp = () => {
 
   if (page === USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользователя
-    return renderUserPageComponent({
+    return renderPostsPageComponent({
       appEl,
-      userPosts
     });
   }
 };
