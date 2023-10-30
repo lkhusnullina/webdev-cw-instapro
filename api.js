@@ -110,15 +110,11 @@ export function addLike(id) {
     },
   })
     .then((response) => {
-      if (response.status !== 200) {
-        throw new Error('Нет авторизации для того, чтобы лайкать посты');
+      if (response.status === 401) {
+        alert('Авторизуйтесь, чтобы поставить лайк');
+        throw new Error('Нет авторизации');
       }
       return response.json();
-    })
-    .catch((error) => {
-      if ((error.message = 'Нет авторизации для того, чтобы лайкать посты')) {
-        alert('Авторизуйтесь, чтобы поставить лайк');
-      }
     })
     .then((data) => {
       return data.post;
@@ -135,7 +131,7 @@ export function disLike(id) {
   })
     .then((response) => {
       if (response.status === 401) {
-        alert('Лайкать посты могут только авторизованные пользователи');
+        alert('Авторизуйтесь, чтобы убрать лайк');
         throw new Error('Нет авторизации');
       }
       return response.json();
