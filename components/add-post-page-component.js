@@ -1,6 +1,5 @@
-
-import { renderHeaderComponent } from "./header-component.js";
-import { renderUploadImageComponent } from "./upload-image-component.js";
+import { renderHeaderComponent } from './header-component.js';
+import { renderUploadImageComponent } from './upload-image-component.js';
 
 const getSafeString = (str) =>
   str
@@ -11,7 +10,7 @@ const getSafeString = (str) =>
     .replaceAll('"', '&quot;');
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
-  let imageUrl = "";
+  let imageUrl = '';
   const render = () => {
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
@@ -40,39 +39,38 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     appEl.innerHTML = appHtml;
 
     renderHeaderComponent({
-      element: document.querySelector(".header-container"),
+      element: document.querySelector('.header-container'),
     });
 
-    const uploadImageContainer = appEl.querySelector(".upload-image-container");
+    const uploadImageContainer = appEl.querySelector('.upload-image-container');
 
     if (uploadImageContainer) {
       renderUploadImageComponent({
-        element: appEl.querySelector(".upload-image-container"),
+        element: appEl.querySelector('.upload-image-container'),
         onImageUrlChange(newImageUrl) {
           imageUrl = newImageUrl;
         },
       });
     }
 
-    document.getElementById("add-button").addEventListener("click", () => {
+    document.getElementById('add-button').addEventListener('click', () => {
       let description = document.getElementById('description');
 
       if (!description.value) {
-        alert("введите описание");
+        alert('введите описание');
         return;
       }
 
       if (!imageUrl) {
-        alert("Не выбрана фотография");
+        alert('Не выбрана фотография');
         return;
       }
 
       onAddPostClick({
         description: getSafeString(description.value),
         imageUrl: imageUrl,
-      })
+      });
 
-      
       // .catch((error) => {
       //   console.error(error)
       //   if (error.message === "Выберите фото и добавьте комментарий") {
