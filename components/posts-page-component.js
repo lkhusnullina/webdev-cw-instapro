@@ -6,8 +6,6 @@ import { posts, appEl, goToPage, setPosts } from '../index.js';
 import { addLike, disLike, getToken } from '../api.js';
 
 export function renderPostsPageComponent({ appEl }) {
-  // TODO: реализовать рендер постов из api
-
   console.log('Актуальный список постов:', posts);
   const postsHtml = posts
     .map((post) => {
@@ -89,11 +87,8 @@ const addLikesElements = (event) => {
   }
 
   const postBlock = event.target.closest('.post');
-  console.log('postBlock', postBlock);
   const postId = postBlock.dataset.postId;
-  console.log('postId', postId);
   let post = posts.find((p) => p.id == postId);
-  console.log('post', post);
   if (!post) return;
   if (post.isLiked) {
     disLike(postId).then((response) => {

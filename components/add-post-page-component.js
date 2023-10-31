@@ -12,7 +12,6 @@ const getSafeString = (str) =>
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   let imageUrl = '';
   const render = () => {
-    // TODO: Реализовать страницу добавления поста
     const appHtml = `
     <div class="page-container">
       <div class="header-container"></div>
@@ -70,17 +69,6 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
         description: getSafeString(description.value),
         imageUrl: imageUrl,
       });
-
-      // .catch((error) => {
-      //   console.error(error)
-      //   if (error.message === "Выберите фото и добавьте комментарий") {
-      //     alert('Выберите фото и добавьте комментарий');
-      //     return;
-      //   }
-
-      //   alert('Ошибка соединения, попробуй позже');
-      //   return;
-      // })
     });
   };
 
